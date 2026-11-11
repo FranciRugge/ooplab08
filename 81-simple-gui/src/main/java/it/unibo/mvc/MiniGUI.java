@@ -1,14 +1,17 @@
 package it.unibo.mvc;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -35,13 +38,23 @@ public class MiniGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //create a new panel 
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS)); // lo mettiamo in maniera orizzontale
+        canvas.add(panel, BorderLayout.CENTER);
+        panel.add(write, BorderLayout.CENTER);
+        final JTextField result = new JTextField("Result");
+        //canvas.add(panel);
+        canvas.add(result, BorderLayout.NORTH);
         /*
          * Handlers
          */
-        write.addActionListener(new ActionListener() {
+        write.addActionListener(new ActionListener() { // qua per gestire i vari eventi qui quello di premere un bottone 
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                IO.println(randomGenerator.nextInt());
+            public void actionPerformed(final ActionEvent e) { // qui quando qualcuno preme un bottone 
+                final int res = randomGenerator.nextInt();
+                IO.println(res);
+                result.setText("Result " + res); // setta il text all' interno dell'interfaccia grafica 
             }
         });
     }
